@@ -10,28 +10,28 @@
 		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
 		<script>
 			function calc(){
-				sal=document。getElementById("salary")。value;
+				sal=document.getElementById("salary").value;
 				salnum=parseInt(sal);
 				ylgr=salnum*0.08;
 				ylgs=salnum*0.2;
-				document.getElementById("ylgr")。innerText=ylgr;
-				document.getElementById("ylgs")。innerText=ylgs;
+				document.getElementById("ylgr").innerText=ylgr;
+				document.getElementById("ylgs").innerText=ylgs;
 				
 				ybgr=salnum*0.02;
 				ybgs=salnum*0.06;
-				document.getElementById("ybgr")。innerText=ybgr;
+				document.getElementById("ybgr").innerText=ybgr;
 				document.getElementById("ybgs").innerText=ybgs;
 				
 				sygr=salnum*0.005;
 				sygs=salnum*0.015;
-				document.getElementById("sygr")。innerText=sygr;
-				document.getElementById("sygs")。innerText=sygs;
+				document.getElementById("sygr").innerText=sygr;
+				document.getElementById("sygs").innerText=sygs;
 				
 				gsgs=salnum*0.005;
 				document.getElementById("gsgs").innerText=gsgs;
 				
 				born=salnum*0.008;
-				document.getElementById("born")。innerText=born;
+				document.getElementById("born").innerText=born;
 				
 				gjjgr=salnum*0.12;
 				gjjgs=salnum*0.12;
@@ -40,7 +40,7 @@
 				
 				grhj=ylgr+ybgr+sygr+gjjgr;
 				gshj=ylgs+ybgs+sygs+gsgs+born+gjjgs;
-				document.getElementById("grhj")。innerText=grhj;
+				document.getElementById("grhj").innerText=grhj;
 				document.getElementById("gshj").innerText=gshj;
 				
 				ze=grhj+gshj;
@@ -55,7 +55,7 @@
 				<tr>
 					<td>工资</td>
 					<td colspan="3">
-						<input class="form-control" 输入="text" id="salary" placeholder="请输入工资" />
+						<input class="form-control" type="text" id="salary" placeholder="请输入工资" />
 					</td>
 					<td>
 						<button class=" btn btn-danger" onclick="calc()">计算</button>
