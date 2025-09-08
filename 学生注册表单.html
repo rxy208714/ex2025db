@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>学生注册表单</title>
+		<style>
+			.star {
+				color: red;
+			}
+
+			label {
+				text-align: left;
+				margin-bottom: 20px;
+			}
+
+			.form-container {
+				max-width: 600px;
+				margin: 30px auto;
+				padding: 0 15px;
+			}
+
+			h1 {
+				text-align: center;
+				font-weight: bold;
+			}
+
+			#button {
+				width: 100%;
+			}
+		</style>
+		<!-- 新 Bootstrap5 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+
+		<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.net/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+	</head>
+	<body>
+		<form onsubmit="return form_validate()">
+			<div class="form-container">
+				<h1 class="mb-5">学生注册表单</h1>
+				<div class="mb-3">
+					<label for="name">姓名<span class="star">*</span></label>
+					<input id="name" name="name" class="form-control" type="text" placeholder="请输入您的姓名" />
+				</div>
+				<div class="mb-3">
+					<label for="phoneNumber">手机号<span class="star">*</span></label>
+					<input id="phoneNumber" name="phoneNumber" class="form-control" type="tel"
+						placeholder="请输入11位手机号" />
+				</div>
+				<div class="mb-3">
+					<label for="email">邮箱</label>
+					<input id="email" name="email" class="form-control" type="email"
+						placeholder="可选，如：student@school.com" />
+				</div>
+				<div class="mb-3">
+					<label for="password">密码<span class="star">*</span></label>
+					<input id="password" name="password" class="form-control" type="password"
+						placeholder="至少6位，包含字母和数字" />
+				</div>
+				<div class="mb-3">
+					<label for="conformPassword">确认密码<span class="star">*</span></label>
+					<input id="conformPassword" name="conformPassword" class="form-control" type="password"
+						placeholder="请再次输入密码" />
+				</div>
+				<button type="submit" class="btn btn-primary" id="button">注册</button>
+			</div>
+		</form>
+		<script>
+			function form_validate(){
+				//姓名
+				let name=document.getElementById("name");
+				let nameReg=/^[\u4e00-\u9fa5]{2,6}$/;   
+				if(nameReg.test(name.value.trim())){
+					//return true;//无需处理
+				}else{
+					alert("格式错误");
+					 return false;
+				}
+				
+				//手机号
+				let phoneNumber=document.getElementById("phoneNumber");
+				let phoneNumberReg=/^[0-9]{11}$/;
+				if(!phoneNumberReg.test(phoneNumber.value.trim())){
+					alert(phoneNumber.placeholder);
+					return false;
+				}
+				
+				//邮箱
+				let email=document.getElementById("email");
+				//xx@xxx(.com/cn/gov.cn/org)
+				let emailReg=/^[a-zA-Z0-9_]+@[A-Za-z0-9]+\.(com|cn|gov\.cn|org)$/;
+				if(!emailReg.test(email.value)){
+					alert("格式错误");
+					return false;
+				}
+				
+				//密码
+				let password=document.getElementById("password");
+				let passwordReg=/^[a-zA-Z0-9]{6,}$/
+				if(!passwordReg.test(password.value)){
+					alert(password.placeholder);
+					return false;
+				}
+				
+				//确认密码
+				let conformPassword=document.getElementById("conformPassword");
+				if(conformPassword.value!=password.value){
+					alert("两次密码输入不一致");
+					return false;
+				}
+				alert("注册成功！")
+				
+			}
+		</script>
+	</body>
+</html>
