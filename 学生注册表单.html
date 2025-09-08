@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<title>学生注册表单</title>
 		<style>
-			.star {
+			。star {
 				color: red;
 			}
 
@@ -13,7 +13,7 @@
 				margin-bottom: 20px;
 			}
 
-			.form-container {
+			。form-container {
 				max-width: 600px;
 				margin: 30px auto;
 				padding: 0 15px;
@@ -73,7 +73,7 @@
 				if(nameReg.test(name.value.trim())){
 					//return true;//无需处理
 				}else{
-					alert("格式错误");
+					alert("姓名格式错误");
 					 return false;
 				}
 				
@@ -90,7 +90,7 @@
 				//xx@xxx(.com/cn/gov.cn/org)
 				let emailReg=/^[a-zA-Z0-9_]+@[A-Za-z0-9]+\.(com|cn|gov\.cn|org)$/;
 				if(!emailReg.test(email.value)){
-					alert("格式错误");
+					alert("邮箱格式错误");
 					return false;
 				}
 				
