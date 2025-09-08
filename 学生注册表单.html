@@ -98,13 +98,13 @@
 				let password=document.getElementById("password");
 				let passwordReg=/^[a-zA-Z0-9]{6,}$/
 				if(!passwordReg.test(password.value)){
-					alert(password.placeholder);
+					alert("密码"+password.placeholder);
 					return false;
 				}
 				
 				//确认密码
 				let conformPassword=document.getElementById("conformPassword");
-				if(conformPassword.value!=password.value){
+				if(conformPassword。value!=password.value){
 					alert("两次密码输入不一致");
 					return false;
 				}
