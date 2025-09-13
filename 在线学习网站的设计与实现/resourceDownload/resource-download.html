@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>资源下载</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        /* 标题样式调整 */
+        .layui-card-header {
+            text-align: center; /* 标题居中 */
+            font-size: 24px;   /* 标题字体放大 */
+            padding: 20px 0;   /* 增加标题上下边距 */
+        }
+        
+        /* 子标签容器样式 - 垂直排列居中显示 */
+        .vertical-single-line {
+            display: flex;
+            flex-direction: column; /* 垂直方向排列 */
+            align-items: center;    /* 水平居中 */
+            gap: 30px;              /* 子标签之间的间距 */
+            padding: 40px 20px;     /* 内边距 */
+        }
+        
+        /* 子标签样式 */
+        .center-link {
+            display: flex;
+            align-items: center;    /* 图标与文字垂直居中 */
+            font-size: 18px;        /* 子标签字体放大 */
+            text-decoration: none;  /* 去除下划线 */
+            width: 300px;           /* 固定宽度，确保对齐 */
+            padding: 15px 20px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+        }
+        
+        .center-link:hover {
+            background-color: #f0f0f0;
+            border-color: #ddd;
+        }
+        
+        /* 图标样式调整 */
+        .center-link i {
+            font-size: 24px;        /* 图标大小 */
+            margin-right: 15px;     /* 图标与文字间距 */
+            width: 30px;            /* 图标固定宽度，确保对齐 */
+            text-align: center;
+        }
+        
+        /* 文字样式 */
+        .center-text {
+            flex: 1;
+            text-align: center;     /* 文字居中 */
+        }
+    </style>
+</head>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-download icon icon-blue"></i>资源下载</div>
+                <div class="layui-card-body">
+                    <!-- 垂直排列的子标签容器 -->
+                    <div class="vertical-single-line">
+                        <a href="javascript:;" class="center-link" 
+                           layuimini-content-href="resourceDownload/upload.html"
+                           data-title="学习资料上传" data-icon="fa fa-upload">
+                            <i class="fa fa-upload"></i>
+                            <cite class="center-text">学习资料上传</cite>
+                        </a>
+                        
+                        <a href="javascript:;" class="center-link" 
+                           layuimini-content-href="resourceDownload/download.html"
+                           data-title="学习资料下载" data-icon="fa fa-download">
+                            <i class="fa fa-download"></i>
+                            <cite class="center-text">学习资料下载</cite>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <script>
+        layui.use(['jquery', 'miniTab'], function () {
+            var $ = layui.jquery,
+                miniTab = layui.miniTab;
+                
+            // 初始化页面，保持与其他页面格式一致
+            miniTab.listen();
+        });
+    </script>
+</body>
+</html>

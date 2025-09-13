@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在线考试</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		<link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../css/public.css" media="all">
+	</head>
+	<body>
+		<div class="layuimini-container">
+			<div class="layuimini-main">
+				<blockquote class="layui-elem-quote layui-text">
+					请选择要参加的考试，每门课程包含10道基础题，考试时间30分钟
+				</blockquote>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					<legend>选择考试课程</legend>
+				</fieldset>
+
+				<form class="layui-form" action="" lay-filter="examSelectForm">
+					<div class="layui-form-item">
+						<label class="layui-form-label required">课程选择</label>
+						<div class="layui-input-block">
+							<select name="course" lay-verify="required" lay-search>
+								<option value="">请选择课程</option>
+								<option value="1">Web前端开发实战（HTML/CSS/JS）</option>
+								<option value="2">Python自动化办公入门到精通</option>
+								<option value="3">Java后端开发（Spring Boot 框架）</option>
+								<option value="4">短视频剪辑与运营（Pr+剪映）</option>
+								<option value="5">数据分析与可视化（Excel+Tableau）</option>
+								<option value="6">移动端APP开发（Flutter跨平台）</option>
+								<option value="7">UI设计基础（Figma实战）</option>
+								<option value="8">MySQL数据库优化与性能调优</option>
+								<option value="9">跨境电商运营（亚马逊开店实战）</option>
+								<option value="10">人工智能基础（机器学习入门）</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item" id="examContent" style="display: none;">
+						<fieldset class="layui-elem-field layui-field-title">
+							<legend>考试题目</legend>
+						</fieldset>
+
+						<div id="questionsContainer"></div>
+
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="submitExam">提交试卷</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置答案</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="layui-form-item" id="startExamContainer">
+						<div class="layui-input-block">
+							<button type="submit" class="layui-btn" lay-submit lay-filter="startExam">开始考试</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'layer'], function() {
+				var form = layui.form,
+					layer = layui.layer,
+					$ = layui.$;
+
+				// 题库数据
+				var questionBanks = {
+					"1": [{
+							id: 1,
+							title: "HTML中哪个标签用于定义文档的主体？",
+							type: "radio",
+							options: ["&lthead>", "&ltbody>", "&lthtml>", "&ltmeta>"],
+							answer: "&ltbody>"
+						},
+						{
+							id: 2,
+							title: "CSS中用于设置文字颜色的属性是？",
+							type: "radio",
+							options: ["font-size", "text-color", "color", "font-color"],
+							answer: "color"
+						},
+						{
+							id: 3,
+							title: "JavaScript中数组的长度属性是？",
+							type: "radio",
+							options: ["size", "length", "count", "index"],
+							answer: "length"
+						},
+						{
+							//&lt:<  &gt:>
+							id: 4,
+							title: "以下哪个是HTML5新增的语义化标签？",
+							type: "radio",
+							options: ["&ltdiv&gt", "&ltspan>", "&ltsection>", "&ltfont>"],
+							answer: "&ltsection>"
+						},
+						{
+							id: 5,
+							title: "CSS中设置元素浮动的属性是？",
+							type: "radio",
+							options: ["float", "align", "position", "display"],
+							answer: "float"
+						},
+						{
+							id: 6,
+							title: "JavaScript中用于调试输出的方法是？",
+							type: "radio",
+							options: ["alert()", "console.log()", "print()", "echo()"],
+							answer: "console.log()"
+						},
+						{
+							id: 7,
+							title: "HTML中表单提交的方法有哪些？",
+							type: "checkbox",
+							options: ["GET", "POST", "PUT", "DELETE"],
+							answer: ["GET", "POST"]
+						},
+						{
+							id: 8,
+							title: "CSS选择器中，ID选择器使用什么符号？",
+							type: "radio",
+							options: [".", "#", "*", "?"],
+							answer: "#"
+						},
+						{
+							id: 9,
+							title: "JavaScript中声明变量的关键字有哪些？",
+							type: "checkbox",
+							options: ["var", "let", "const", "int"],
+							answer: ["var", "let", "const"]
+						},
+						{
+							id: 10,
+							title: "HTML中img标签的哪个属性用于指定图片路径？",
+							type: "radio",
+							options: ["src", "href", "link", "path"],
+							answer: "src"
+						}
+					],
+					"2": [{
+							id: 1,
+							title: "Python中输出信息的函数是？",
+							type: "radio",
+							options: ["print()", "echo()", "output()", "write()"],
+							answer: "print()"
+						},
+						{
+							id: 2,
+							title: "Python中用于读取Excel文件的库是？",
+							type: "radio",
+							options: ["pandas", "numpy", "matplotlib", "requests"],
+							answer: "pandas"
+						},
+						{
+							id: 3,
+							title: "Python中单行注释使用什么符号？",
+							type: "radio",
+							options: ["/* */", "//", "#", "--"],
+							answer: "#"
+						},
+						{
+							id: 4,
+							title: "以下哪个是Python的列表类型？",
+							type: "radio",
+							options: ["()", "[]", "{}", "<>"],
+							answer: "[]"
+						},
+						{
+							id: 5,
+							title: "Python中if语句的关键字是？",
+							type: "radio",
+							options: ["if", "elif", "else", "以上都是"],
+							answer: "以上都是"
+						},
+						{
+							id: 6,
+							title: "Python中用于循环的语句有哪些？",
+							type: "checkbox",
+							options: ["for", "while", "loop", "repeat"],
+							answer: ["for", "while"]
+						},
+						{
+							id: 7,
+							title: "Python中定义函数的关键字是？",
+							type: "radio",
+							options: ["function", "def", "func", "define"],
+							answer: "def"
+						},
+						{
+							id: 8,
+							title: "pandas中读取CSV文件的函数是？",
+							type: "radio",
+							options: ["read_csv()", "read_excel()", "load_csv()", "import_csv()"],
+							answer: "read_csv()"
+						},
+						{
+							id: 9,
+							title: "Python中字符串可以使用什么符号定义？",
+							type: "checkbox",
+							options: ["单引号", "双引号", "三引号", "反引号"],
+							answer: ["单引号", "双引号", "三引号"]
+						},
+						{
+							id: 10,
+							title: "Python中安装第三方库的命令是？",
+							type: "radio",
+							options: ["pip install", "npm install", "yum install", "apt-get install"],
+							answer: "pip install"
+						}
+					],
+					// 其他课程题库结构类似，此处省略...
+					"3": [ /* Java后端开发题库 */ {
+							id: 1,
+							title: "Java中用于定义类的关键字是？",
+							type: "radio",
+							options: ["class", "struct", "interface", "object"],
+							answer: "class"
+						},
+						{
+							id: 2,
+							title: "Spring Boot中用于标识控制器的注解是？",
+							type: "radio",
+							options: ["@Service", "@Controller", "@Repository", "@Component"],
+							answer: "@Controller"
+						},
+						{
+							id: 3,
+							title: "Java中基本数据类型包括哪些？",
+							type: "checkbox",
+							options: ["int", "String", "boolean", "char"],
+							answer: ["int", "boolean", "char"]
+						},
+						{
+							id: 4,
+							title: "Spring Boot的核心注解是？",
+							type: "radio",
+							options: ["@SpringBootApplication", "@SpringApplication", "@BootApplication",
+								"@Application"
+							],
+							answer: "@SpringBootApplication"
+						},
+						{
+							id: 5,
+							title: "Java中处理异常的关键字是？",
+							type: "checkbox",
+							options: ["try", "catch", "finally", "throw"],
+							answer: ["try", "catch", "finally", "throw"]
+						},
+						{
+							id: 6,
+							title: "Spring Boot中用于注入依赖的注解是？",
+							type: "radio",
+							options: ["@Inject", "@Autowired", "@Resource", "@Service"],
+							answer: "@Autowired"
+						},
+						{
+							id: 7,
+							title: "Java中String类的特点是？",
+							type: "radio",
+							options: ["可变的", "不可变的", "基本数据类型", "抽象类"],
+							answer: "不可变的"
+						},
+						{
+							id: 8,
+							title: "Spring Boot中用于处理HTTP GET请求的注解是？",
+							type: "radio",
+							options: ["@GetMapping", "@PostMapping", "@RequestGet", "@GetRequest"],
+							answer: "@GetMapping"
+						},
+						{
+							id: 9,
+							title: "Java中实现多线程的方式有哪些？",
+							type: "checkbox",
+							options: ["继承Thread类", "实现Runnable接口", "实现Callable接口", "使用Executor框架"],
+							answer: ["继承Thread类", "实现Runnable接口", "实现Callable接口", "使用Executor框架"]
+						},
+						{
+							id: 10,
+							title: "Spring Boot中配置文件的默认名称是？",
+							type: "radio",
+							options: ["config.properties", "application.properties", "springboot.properties",
+								"app.properties"
+							],
+							answer: "application.properties"
+						}
+					],
+					"4": [ /* 短视频剪辑题库 */ {
+							id: 1,
+							title: "Premiere Pro中用于分割素材的快捷键是？",
+							type: "radio",
+							options: ["Ctrl+C", "Ctrl+V", "Ctrl+K", "Ctrl+X"],
+							answer: "Ctrl+K"
+						},
+						{
+							id: 2,
+							title: "剪映中用于添加转场效果的面板是？",
+							type: "radio",
+							options: ["音频面板", "文本面板", "转场面板", "滤镜面板"],
+							answer: "转场面板"
+						},
+						{
+							id: 3,
+							title: "短视频常见的画幅比例有哪些？",
+							type: "checkbox",
+							options: ["16:9", "9:16", "1:1", "4:3"],
+							answer: ["16:9", "9:16", "1:1"]
+						},
+						{
+							id: 4,
+							title: "Premiere Pro中时间线面板的主要作用是？",
+							type: "radio",
+							options: ["导入素材", "编辑视频序列", "调整音频音量", "添加字幕"],
+							answer: "编辑视频序列"
+						},
+						{
+							id: 5,
+							title: "剪映中用于自动识别字幕的功能是？",
+							type: "radio",
+							options: ["语音转文字", "文字转语音", "自动翻译", "字幕模板"],
+							answer: "语音转文字"
+						},
+						{
+							id: 6,
+							title: "短视频运营中常用的平台有哪些？",
+							type: "checkbox",
+							options: ["抖音", "快手", "B站", "小红书"],
+							answer: ["抖音", "快手", "B站", "小红书"]
+						},
+						{
+							id: 7,
+							title: "Premiere Pro中用于调整视频颜色的功能是？",
+							type: "radio",
+							options: ["色阶", "曲线", " Lumetri 颜色", "色相/饱和度"],
+							answer: " Lumetri 颜色"
+						},
+						{
+							id: 8,
+							title: "剪映中的“关键帧”功能主要用于？",
+							type: "radio",
+							options: ["添加滤镜", "制作动画效果", "调整音量", "分割视频"],
+							answer: "制作动画效果"
+						},
+						{
+							id: 9,
+							title: "短视频标题制作的技巧包括哪些？",
+							type: "checkbox",
+							options: ["使用数字", "引发好奇", "关键词前置", "过长描述"],
+							answer: ["使用数字", "引发好奇", "关键词前置"]
+						},
+						{
+							id: 10,
+							title: "Premiere Pro中导出视频的快捷键是？",
+							type: "radio",
+							options: ["Ctrl+M", "Ctrl+E", "Ctrl+S", "Ctrl+N"],
+							answer: "Ctrl+M"
+						}
+					],
+					"5": [ /* 数据分析题库 */ {
+							id: 1,
+							title: "Excel中用于求和的函数是？",
+							type: "radio",
+							options: ["SUM()", "COUNT()", "AVERAGE()", "MAX()"],
+							answer: "SUM()"
+						},
+						{
+							id: 2,
+							title: "Tableau中用于展示数据随时间变化趋势的图表是？",
+							type: "radio",
+							options: ["柱状图", "折线图", "饼图", "散点图"],
+							answer: "折线图"
+						},
+						{
+							id: 3,
+							title: "Excel中的数据透视表可以实现哪些功能？",
+							type: "checkbox",
+							options: ["数据汇总", "数据筛选", "", "数据预测"],
+							answer: ["数据汇总", "数据筛选", "数据排序"]
+						},
+						{
+							id: 4,
+							title: "Tableau中用于创建分层结构的功能是？",
+							type: "radio",
+							options: ["集", "参数", "分层结构", "计算字段"],
+							answer: "分层结构"
+						},
+						{
+							id: 5,
+							title: "Excel中条件格式的作数据排序用是？",
+							type: "radio",
+							options: ["自动计算", "根据条件设置单元格格式", "排序数据", "筛选数据"],
+							answer: "根据条件设置单元格格式"
+						},
+						{
+							id: 6,
+							title: "数据分析中常用的数据类型有哪些？",
+							type: "checkbox",
+							options: ["数值型", "文本型", "日期型", "逻辑型"],
+							answer: ["数值型", "文本型", "日期型", "逻辑型"]
+						},
+						{
+							id: 7,
+							title: "Tableau中用于比较不同类别数据的图表是？",
+							type: "radio",
+							options: ["折线图", "饼图", "柱状图", "地图"],
+							answer: "柱状图"
+						},
+						{
+							id: 8,
+							title: "Excel中VLOOKUP函数的作用是？",
+							type: "radio",
+							options: ["求和", "查找匹配数据", "排序", "筛选"],
+							answer: "查找匹配数据"
+						},
+						{
+							id: 9,
+							title: "数据可视化的基本原则包括哪些？",
+							type: "checkbox",
+							options: ["简洁明了", "突出重点", "使用合适的图表类型", "过度装饰"],
+							answer: ["简洁明了", "突出重点", "使用合适的图表类型"]
+						},
+						{
+							id: 10,
+							title: "Tableau中用于创建交互式仪表盘的功能是？",
+							type: "radio",
+							options: ["工作表", "仪表板", "故事", "数据连接"],
+							answer: "仪表板"
+						}
+					],
+					"6": [ /* 移动端开发题库 */ {
+							id: 1,
+							title: "Flutter中用于构建UI的基本单位是？",
+							type: "radio",
+							options: ["组件", "视图", "控件", "元素"],
+							answer: "组件"
+						},
+						{
+							id: 2,
+							title: "Flutter应用的入口函数是？",
+							type: "radio",
+							options: ["main()", "app()", "run()", "start()"],
+							answer: "main()"
+						},
+						{
+							id: 3,
+							title: "Flutter中常用的布局组件有哪些？",
+							type: "checkbox",
+							options: ["Container", "Row", "Column", "Stack"],
+							answer: ["Container", "Row", "Column", "Stack"]
+						},
+						{
+							id: 4,
+							title: "Flutter中用于导航的组件是？",
+							type: "radio",
+							options: ["Navigator", "Router", "Route", "Navigation"],
+							answer: "Navigator"
+						},
+						{
+							id: 5,
+							title: "Flutter中管理应用状态的方式有哪些？",
+							type: "checkbox",
+							options: ["setState", "Provider", "Bloc", "Riverpod"],
+							answer: ["setState", "Provider", "Bloc", "Riverpod"]
+						},
+						{
+							id: 6,
+							title: "Flutter中用于显示图片的组件是？",
+							type: "radio",
+							options: ["Image", "Picture", "Photo", "ImageView"],
+							answer: "Image"
+						},
+						{
+							id: 7,
+							title: "Flutter中用于处理用户输入的组件是？",
+							type: "radio",
+							options: ["Input", "TextField", "EditText", "TextInput"],
+							answer: "TextField"
+						},
+						{
+							id: 8,
+							title: "Flutter中用于网络请求的库是？",
+							type: "radio",
+							options: ["http", "dio", "retrofit", "以上都是"],
+							answer: "以上都是"
+						},
+						{
+							id: 9,
+							title: "Flutter的热重载功能的特点是？",
+							type: "checkbox",
+							options: ["快速更新UI", "保留应用状态", "提高开发效率", "需要重启应用"],
+							answer: ["快速更新UI", "保留应用状态", "提高开发效率"]
+						},
+						{
+							id: 10,
+							title: "Flutter中用于实现动画的类是？",
+							type: "radio",
+							options: ["Animation", "Animator", "Animate", "Motion"],
+							answer: "Animation"
+						}
+					],
+					"7": [ /* UI设计题库 */ {
+							id: 1,
+							title: "Figma中用于创建基本形状的工具是？",
+							type: "radio",
+							options: ["钢笔工具", "形状工具", "文本工具", "选择工具"],
+							answer: "形状工具"
+						},
+						{
+							id: 2,
+							title: "UI设计中常用的颜色模式是？",
+							type: "radio",
+							options: ["RGB", "CMYK", "HSB", "LAB"],
+							answer: "RGB"
+						},
+						{
+							id: 3,
+							title: "Figma中的组件功能可以实现哪些效果？",
+							type: "checkbox",
+							options: ["重复使用", "统一修改", "创建变体", "自动排版"],
+							answer: ["重复使用", "统一修改", "创建变体"]
+						},
+						{
+							id: 4,
+							title: "UI设计中常用的原型交互类型有哪些？",
+							type: "radio",
+							options: ["点击", "滑动", "悬停", "以上都是"],
+							answer: "以上都是"
+						},
+						{
+							id: 5,
+							title: "Figma中用于创建矢量图形的工具是？",
+							type: "radio",
+							options: ["形状工具", "钢笔工具", "铅笔工具", "画笔工具"],
+							answer: "钢笔工具"
+						},
+						{
+							id: 6,
+							title: "UI设计中的常见尺寸规范包括？",
+							type: "checkbox",
+							options: ["iOS设计规范", "Android设计规范", "Web设计规范", "印刷设计规范"],
+							answer: ["iOS设计规范", "Android设计规范", "Web设计规范"]
+						},
+						{
+							id: 7,
+							title: "Figma中用于协作编辑的功能是？",
+							type: "radio",
+							options: ["共享原型", "团队库", "实时协作", "版本历史"],
+							answer: "实时协作"
+						},
+						{
+							id: 8,
+							title: "UI设计中用于创建层次感的方法有？",
+							type: "checkbox",
+							options: ["阴影", "颜色对比", "大小对比", "留白"],
+							answer: ["阴影", "颜色对比", "大小对比", "留白"]
+						},
+						{
+							id: 9,
+							title: "Figma中用于导出设计资源的功能是？",
+							type: "radio",
+							options: ["导出", "分享", "复制", "保存"],
+							answer: "导出"
+						},
+						{
+							id: 10,
+							title: "UI设计中的“交互反馈”指的是？",
+							type: "radio",
+							options: ["用户操作后的响应", "界面的美观程度", "页面的加载速度", "图标的设计风格"],
+							answer: "用户操作后的响应"
+						}
+					],
+					"8": [ /* MySQL题库 */ {
+							id: 1,
+							title: "MySQL中用于查询数据的语句是？",
+							type: "radio",
+							options: ["INSERT", "SELECT", "UPDATE", "DELETE"],
+							answer: "SELECT"
+						},
+						{
+							id: 2,
+							title: "MySQL中用于提高查询性能的数据库对象是？",
+							type: "radio",
+							options: ["索引", "视图", "存储过程", "触发器"],
+							answer: "索引"
+						},
+						{
+							id: 3,
+							title: "MySQL中常用的存储引擎有哪些？",
+							type: "checkbox",
+							options: ["InnoDB", "MyISAM", "Memory", "CSV"],
+							answer: ["InnoDB", "MyISAM", "Memory", "CSV"]
+						},
+						{
+							id: 4,
+							title: "MySQL中用于分组查询的关键字是？",
+							type: "radio",
+							options: ["GROUP BY", "ORDER BY", "HAVING", "WHERE"],
+							answer: "GROUP BY"
+						},
+						{
+							id: 5,
+							title: "MySQL中事务的ACID特性包括哪些？",
+							type: "checkbox",
+							options: ["原子性", "一致性", "隔离性", "持久性"],
+							answer: ["原子性", "一致性", "隔离性", "持久性"]
+						},
+						{
+							id: 6,
+							title: "MySQL中用于连接多个表的查询方式有？",
+							type: "checkbox",
+							options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN"],
+							answer: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN"]
+						},
+						{
+							id: 7,
+							title: "MySQL中用于限制查询结果数量的关键字是？",
+							type: "radio",
+							options: ["LIMIT", "OFFSET", "TOP", "RANGE"],
+							answer: "LIMIT"
+						},
+						{
+							id: 8,
+							title: "MySQL中用于查看表结构的命令是？",
+							type: "radio",
+							options: ["DESCRIBE", "SHOW", "EXPLAIN", "VIEW"],
+							answer: "DESCRIBE"
+						},
+						{
+							id: 9,
+							title: "MySQL数据库优化的常用方法有哪些？",
+							type: "checkbox",
+							options: ["添加索引", "优化SQL语句", "表结构优化", "硬件升级"],
+							answer: ["添加索引", "优化SQL语句", "表结构优化", "硬件升级"]
+						},
+						{
+							id: 10,
+							title: "MySQL中用于备份数据库的命令是？",
+							type: "radio",
+							options: ["mysqldump", "mysqlbackup", "backup", "dump"],
+							answer: "mysqldump"
+						}
+					],
+					"9": [ /* 跨境电商题库 */ {
+							id: 1,
+							title: "亚马逊平台的主要盈利模式是？",
+							type: "radio",
+							options: ["销售佣金", "会员费", "广告收入", "以上都是"],
+							answer: "以上都是"
+						},
+						{
+							id: 2,
+							title: "亚马逊开店需要准备的材料不包括？",
+							type: "radio",
+							options: ["身份证", "营业执照", "银行账户", "产品专利证书"],
+							answer: "产品专利证书"
+						},
+						{
+							id: 3,
+							title: "亚马逊平台的主要站点包括哪些国家？",
+							type: "checkbox",
+							options: ["美国", "英国", "德国", "日本"],
+							answer: ["美国", "英国", "德国", "日本"]
+						},
+						{
+							id: 4,
+							title: "亚马逊的FBA服务指的是？",
+							type: "radio",
+							options: ["物流配送服务", "广告推广服务", "店铺装修服务", "产品摄影服务"],
+							answer: "物流配送服务"
+						},
+						{
+							id: 5,
+							title: "亚马逊产品Listing的核心要素包括哪些？",
+							type: "checkbox",
+							options: ["标题", "图片", "描述", "关键词"],
+							answer: ["标题", "图片", "描述", "关键词"]
+						},
+						{
+							id: 6,
+							title: "亚马逊平台的A+页面指的是？",
+							type: "radio",
+							options: ["高级产品详情页", "促销活动页", "店铺首页", "产品分类页"],
+							answer: "高级产品详情页"
+						},
+						{
+							id: 7,
+							title: "亚马逊的品牌备案主要作用是？",
+							type: "radio",
+							options: ["保护品牌权益", "提高产品排名", "降低平台费用", "增加曝光机会"],
+							answer: "保护品牌权益"
+						},
+						{
+							id: 8,
+							title: "亚马逊广告的主要类型有哪些？",
+							type: "checkbox",
+							options: [" Sponsored Products", "Sponsored Brands", "Sponsored Display",
+								"Amazon Stores"
+							],
+							answer: [" Sponsored Products", "Sponsored Brands", "Sponsored Display"]
+						},
+						{
+							id: 9,
+							title: "亚马逊平台的客户评价对店铺的影响包括？",
+							type: "checkbox",
+							options: ["影响产品排名", "影响买家购买决策", "影响店铺权重", "影响广告费用"],
+							answer: ["影响产品排名", "影响买家购买决策", "影响店铺权重"]
+						},
+						{
+							id: 10,
+							title: "亚马逊的黄金购物车（Buy Box）的作用是？",
+							type: "radio",
+							options: ["提高转化率", "降低平台费用", "增加产品曝光", "提升品牌知名度"],
+							answer: "提高转化率"
+						}
+					],
+					"10": [ /* 人工智能题库 */ {
+							id: 1,
+							title: "机器学习中用于预测连续值的任务是？",
+							type: "radio",
+							options: ["分类", "回归", "聚类", "降维"],
+							answer: "回归"
+						},
+						{
+							id: 2,
+							title: "以下哪个不是常见的机器学习算法？",
+							type: "radio",
+							options: ["决策树", "神经网络", "K-means", "HTML5"],
+							answer: "HTML5"
+						},
+						{
+							id: 3,
+							title: "监督学习的特点包括哪些？",
+							type: "checkbox",
+							options: ["使用带标签的数据", "需要人工标注", "可以用于预测", "不需要训练数据"],
+							answer: ["使用带标签的数据", "需要人工标注", "可以用于预测"]
+						},
+						{
+							id: 4,
+							title: "深度学习的核心是？",
+							type: "radio",
+							options: ["神经网络", "决策树", "支持向量机", "随机森林"],
+							answer: "神经网络"
+						},
+						{
+							id: 5,
+							title: "机器学习中常用的评估指标有哪些？",
+							type: "checkbox",
+							options: ["准确率", "精确率", "召回率", "F1分数"],
+							answer: ["准确率", "精确率", "召回率", "F1分数"]
+						},
+						{
+							id: 6,
+							title: "无监督学习的典型应用是？",
+							type: "radio",
+							options: ["图像分类", "语音识别", "客户分群", "情感分析"],
+							answer: "客户分群"
+						},
+						{
+							id: 7,
+							title: "Python中常用的机器学习库是？",
+							type: "radio",
+							options: ["scikit-learn", "pandas", "matplotlib", "django"],
+							answer: "scikit-learn"
+						},
+						{
+							id: 8,
+							title: "深度学习中常用的框架有哪些？",
+							type: "checkbox",
+							options: ["TensorFlow", "PyTorch", "Keras", "Scikit-learn"],
+							answer: ["TensorFlow", "PyTorch", "Keras"]
+						},
+						{
+							id: 9,
+							title: "过拟合问题的解决方法包括？",
+							type: "checkbox",
+							options: ["增加训练数据", "正则化", "简化模型", "增加模型复杂度"],
+							answer: ["增加训练数据", "正则化", "简化模型"]
+						},
+						{
+							id: 10,
+							title: "人工智能的发展阶段不包括？",
+							type: "radio",
+							options: ["弱人工智能", "强人工智能", "超人工智能", "伪人工智能"],
+							answer: "伪人工智能"
+						}
+					]
+				};
+
+				// 开始考试按钮点击事件
+				form.on('submit(startExam)', function(data) {
+					var courseId = data.field.course;
+					if (!courseId) {
+						layer.msg('请选择课程', {
+							icon: 2
+						});
+						return false;
+					}
+
+					// 显示试题内容
+					$('#startExamContainer').hide();
+					$('#examContent').show();
+
+					// 渲染试题
+					renderQuestions(courseId);
+
+					return false;
+				});
+
+				// 渲染试题
+				function renderQuestions(courseId) {
+					var questions = questionBanks[courseId] || [];
+					var html = '';
+
+					questions.forEach(function(question, index) {
+						html += '<div class="layui-form-item">';
+						html += '<label class="layui-form-label">' + (index + 1) + '. ' + question.title +
+							'</label>';
+						html += '<div class="layui-input-block">';
+
+						if (question.type === 'radio') {
+							question.options.forEach(function(option, optIndex) {
+								var letter = String.fromCharCode(65 + optIndex);
+								html += '<input type="radio" name="q' + question.id + '" value="' +
+									option + '" title="' + letter + '. ' + option + '">';
+							});
+						} else if (question.type === 'checkbox') {
+							question.options.forEach(function(option, optIndex) {
+								var letter = String.fromCharCode(65 + optIndex);
+								html += '<input type="checkbox" name="q' + question.id + '" value="' +
+									option + '" title="' + letter + '. ' + option + '">';
+							});
+						}
+
+						html += '</div></div>';
+					});
+
+					$('#questionsContainer').html(html);
+					form.render(); // 重新渲染表单
+					// 禁用课程选择下拉框并重新渲染
+					$('select[name="course"]').attr('disabled', 'disabled').addClass('layui-disabled');
+					form.render('select'); // 重新渲染下拉框，使禁用生效					
+				}
+
+				// 提交试卷
+				form.on('submit(submitExam)', function(data) {
+					layer.confirm('确定要提交试卷吗？提交后无法修改', function(index) {
+						layer.close(index);
+						layer.alert('试卷提交成功!', function(successIndex) {
+							layer.close(successIndex); // 关闭成功提示框
+
+							// 恢复下拉框可编辑状态
+							$('select[name="course"]')
+								.removeAttr('disabled') // 移除禁用属性
+								.removeClass('layui-disabled'); // 移除禁用样式
+							form.render('select'); // 重新渲染下拉框
+
+							// 可选：恢复初始界面（隐藏试题，显示开始按钮）
+							$('#examContent').hide();
+							$('#startExamContainer').show();
+						});
+					});
+					return false;
+				});
+			});
+		</script>
+	</body>
+</html>

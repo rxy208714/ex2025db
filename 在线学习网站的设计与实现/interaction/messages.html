@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>互动交流-私信交流</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		<link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../css/public.css" media="all">
+		
+	</head>
+	<body>
+		<div class="layuimini-container">
+			<div class="layuimini-main">
+				<fieldset class="table-search-fieldset">
+					<legend>搜索私信</legend>
+					<div style="margin: 10px 10px 10px 10px">
+						<form class="layui-form layui-form-pane" action="">
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">对方用户</label>
+									<div class="layui-input-inline">
+										<input type="text" name="username" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">消息状态</label>
+									<div class="layui-input-inline">
+										<select name="status">
+											<option value="">全部状态</option>
+											<option value="unread">未读</option>
+											<option value="read">已读</option>
+										</select>
+									</div>
+								</div>
+								<div class="layui-inline">
+									<label class="layui-form-label">时间范围</label>
+									<div class="layui-input-inline">
+										<input type="text" name="dateRange" class="layui-input"
+											placeholder="开始日期 - 结束日期">
+									</div>
+								</div>
+								<div class="layui-inline">
+									<button type="submit" class="layui-btn layui-btn-primary" lay-submit
+										lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+									</button>
+									<button type="button" class="layui-btn" lay-event="newMsg">
+										<i class="layui-icon"></i> 发送新消息
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</fieldset>
+
+				<script type="text/html" id="toolbarDemo">
+					<div class="layui-btn-container">
+						<button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="markRead"> 标记已读 </button>
+						<button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteSelected"> 批量删除 </button>
+					</div>
+				</script>
+
+				<table class="layui-hide" id="messageTable" lay-filter="messageTableFilter"></table>
+
+				<script type="text/html" id="messageBar">
+					<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</a>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+				</script>
+
+				<!-- 消息详情弹窗模板 -->
+				<div id="messageDetail" style="display: none; padding: 15px;">
+					<div class="layui-form-item">
+						<label class="layui-form-label">发送者</label>
+						<div class="layui-input-block">
+							<input type="text" id="senderName" class="layui-input" readonly>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">发送时间</label>
+						<div class="layui-input-block">
+							<input type="text" id="sendTime" class="layui-input" readonly>
+						</div>
+					</div>
+					<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">消息内容</label>
+						<div class="layui-input-block">
+							<textarea id="messageContent" class="layui-textarea" readonly rows="6"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">回复内容</label>
+						<div class="layui-input-block">
+							<textarea id="replyContent" class="layui-textarea" placeholder="请输入回复内容..."
+								rows="4"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'table', 'layer', 'laydate'], function() {
+				var $ = layui.jquery,
+					form = layui.form,
+					table = layui.table,
+					layer = layui.layer,
+					laydate = layui.laydate;
+
+				// 初始化日期范围选择器
+				laydate.render({
+					elem: '[name="dateRange"]',
+					range: ' - '
+				});
+
+				// 渲染消息表格
+				table.render({
+					elem: '#messageTable',
+					url: '../api/messages.json',
+					toolbar: '#toolbarDemo',
+					defaultToolbar: ['filter', 'print'],
+					cols: [
+						[{
+							type: 'checkbox',
+							width: 50
+						}, {
+							field: 'id',
+							width: 8,
+							title: 'ID',
+							sort: true
+						}, {
+							field: 'sender',
+							title: '发送者',
+							width: 120
+						}, {
+							field: 'receiver',
+							title: '接收者',
+							width: 120
+						}, {
+							field: 'content',
+							title: '消息内容',
+							minWidth: 400,
+							templet: function(d) {
+								// 截取部分内容显示
+								return d.content;
+							}
+						}, {
+							field: 'status',
+							title: '状态',
+							width: 100,
+							templet: function(d) {
+								return d.status === 'unread' ?
+									'<span style="color: #FF5722; font-weight: bold;">未读</span>' :
+									'<span>已读</span>';
+							}
+						}, {
+							field: 'sendTime',
+							title: '发送时间',
+							width: 160,
+							sort: true
+						}, {
+							title: '操作',
+							minWidth: 150,
+							toolbar: '#messageBar',
+							align: 'center'
+						}]
+					],
+					limits: [10, 15, 20, 25],
+					limit: 15,
+					page: true,
+					skin: 'line'
+				});
+
+				// 监听搜索操作
+				form.on('submit(data-search-btn)', function(data) {
+					var result = JSON.stringify(data.field);
+
+					// 执行搜索重载
+					table.reload('messageTable', {
+						page: {
+							curr: 1
+						},
+						where: {
+							searchParams: result
+						}
+					}, 'data');
+
+					return false;
+				});
+
+				// 监听工具栏事件
+				table.on('toolbar(messageTableFilter)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					switch (obj.event) {
+						case 'markRead':
+							var data = checkStatus.data;
+							if (data.length === 0) {
+								layer.msg('请选择需要标记的消息');
+								return;
+							}
+							layer.confirm('确定要标记选中的 ' + data.length + ' 条消息为已读吗？', function(index) {
+								layer.close(index);
+								layer.msg('已标记为已读');
+							});
+							break;
+						case 'deleteSelected':
+							var data = checkStatus.data;
+							if (data.length === 0) {
+								layer.msg('请选择需要删除的消息');
+								return;
+							}
+							layer.confirm('确定要删除选中的 ' + data.length + ' 条消息吗？', function(index) {
+								layer.close(index);
+							});
+							break;
+					}
+				});
+
+				// 监听表格操作
+				table.on('tool(messageTableFilter)', function(obj) {
+					var data = obj.data;
+					if (obj.event === 'view') {
+						// 填充消息详情
+						$('#senderName').val(data.sender);
+						$('#sendTime').val(data.sendTime);
+						$('#messageContent').val(data.content);
+						$('#replyContent').val('');
+
+						// 打开详情弹窗
+						layer.open({
+							type: 1,
+							title: '消息详情',
+							area: ['600px', '500px'],
+							content: $('#messageDetail'),
+							btn: ['回复', '关闭'],
+							yes: function(index, layero) {
+								var reply = $('#replyContent').val();
+								if (reply.trim() === '') {
+									layer.msg('请输入回复内容');
+									return;
+								}
+								layer.alert('回复成功: ' + reply, function() {
+									layer.close(index);
+								});
+							}
+						});
+
+						// 如果是未读消息，标记为已读
+						if (data.status === 'unread') {
+							obj.update({
+								status: 'read'
+							});
+						}
+					} else if (obj.event === 'delete') {
+						layer.confirm('确定要删除这条消息吗？', function(index) {
+							obj.del();
+							layer.close(index);
+						});
+					}
+				});
+
+				
+				//你被骗了，只会出现发送新消息失败，哈哈哈
+				$(document).on('click', '[lay-event="newMsg"]', function() {
+				    layer.msg('发送新消息失败', {
+				        icon: 5, 
+				        time: 2000 
+				    });
+				});
+			});
+		</script>
+	</body>
+</html>

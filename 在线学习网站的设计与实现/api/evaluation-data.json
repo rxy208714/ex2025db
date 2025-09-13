@@ -1,0 +1,87 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 10,
+  "data": [
+    {
+      "id": 1,
+      "courseName": "Web 前端开发实战（HTML/CSS/JS）",
+      "progress": 85,
+      "mastery": "良好",
+      "lastStudy": "2025-09-15 19:30:22",
+      "status": "inprogress"
+    },
+    {
+      "id": 2,
+      "courseName": "Python 自动化办公入门到精通",
+      "progress": 100,
+      "mastery": "优秀",
+      "lastStudy": "2025-09-10 15:45:11",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "courseName": "Java 后端开发（Spring Boot 框架）",
+      "progress": 60,
+      "mastery": "中等",
+      "lastStudy": "2025-09-13 10:20:33",
+      "status": "inprogress"
+    },
+    {
+      "id": 4,
+      "courseName": "短视频剪辑与运营（Pr + 剪映）",
+      "progress": 100,
+      "mastery": "良好",
+      "lastStudy": "2025-09-05 09:15:55",
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "courseName": "数据分析与可视化（Excel+Tableau）",
+      "progress": 30,
+      "mastery": "入门",
+      "lastStudy": "2025-09-16 14:50:17",
+      "status": "inprogress"
+    },
+    {
+      "id": 6,
+      "courseName": "移动端 APP 开发（Flutter 跨平台）",
+      "progress": 45,
+      "mastery": "中等",
+      "lastStudy": "2025-09-14 16:22:08",
+      "status": "inprogress"
+    },
+    {
+      "id": 7,
+      "courseName": "UI 设计基础（Figma 实战）",
+      "progress": 100,
+      "mastery": "优秀",
+      "lastStudy": "2025-09-01 11:33:44",
+      "status": "completed"
+    },
+    {
+      "id": 8,
+      "courseName": "MySQL 数据库优化与性能调优",
+      "progress": 20,
+      "mastery": "入门",
+      "lastStudy": "2025-09-14 08:40:59",
+      "status": "inprogress"
+    },
+    {
+      "id": 9,
+      "courseName": "跨境电商运营（亚马逊开店实战）",
+      "progress": 75,
+      "mastery": "良好",
+      "lastStudy": "2025-09-13 13:10:25",
+      "status": "inprogress"
+    },
+    {
+      "id": 10,
+      "courseName": "人工智能基础（机器学习入门）",
+      "progress": 15,
+      "mastery": "入门",
+      "lastStudy": "2025-09-12 11:55:36",
+      "status": "inprogress"
+    }
+  ]
+}

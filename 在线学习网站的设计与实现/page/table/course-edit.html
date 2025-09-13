@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑课程</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <!-- 隐藏的ID字段，用于标识当前编辑的课程 -->
+    <input type="hidden" name="id" value="">
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label required">课程名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="coursename" lay-verify="required" lay-reqtext="课程名称不能为空" placeholder="请输入课程名称" value="" class="layui-input">
+            <tip>填写课程的完整名称。</tip>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label required">课程分类</label>
+        <div class="layui-input-block">
+            <select name="classify" lay-verify="required" lay-reqtext="课程分类不能为空">
+                <option value="">请选择分类</option>
+                <option value="技术开发">技术开发</option>
+                <option value="办公效率">办公效率</option>
+                <option value="设计运营">设计运营</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label required">难度级别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="level" value="入门" title="入门">
+            <input type="radio" name="level" value="简单" title="简单">
+            <input type="radio" name="level" value="中等" title="中等">
+            <input type="radio" name="level" value="困难" title="困难">
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label required">讲师</label>
+        <div class="layui-input-block">
+            <input type="text" name="teacher" lay-verify="required" lay-reqtext="讲师姓名不能为空" placeholder="请输入讲师姓名" value="" class="layui-input">
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label">评分</label>
+        <div class="layui-input-block">
+            <input type="text" name="rating" placeholder="例如：4.8/5" value="" class="layui-input">
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+        <label class="layui-form-label">热度</label>
+        <div class="layui-input-block">
+            <input type="text" name="popularity" placeholder="例如：3286人" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">课程简介</label>
+        <div class="layui-input-block">
+            <textarea name="description" class="layui-textarea" placeholder="请输入课程简介"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'layer', 'jquery'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        // 从父页面获取当前课程数据（需配合course-scan.html的编辑按钮传参）
+        // 实际场景中，可通过URL参数或父页面存储的临时数据获取
+        var courseData = parent.currentEditData; // 假设父页面存储了当前编辑数据
+        
+        // 填充表单数据
+        if (courseData) {
+            for (var key in courseData) {
+                var $elem = $('[name="' + key + '"]');
+                if ($elem.attr('type') === 'radio') {
+                    // 处理单选按钮
+                    $elem.each(function() {
+                        if ($(this).val() === courseData[key]) {
+                            $(this).prop('checked', true);
+                        }
+                    });
+                } else if ($elem.prop('tagName') === 'SELECT') {
+                    // 处理下拉框
+                    $elem.val(courseData[key]);
+                } else {
+                    // 处理输入框和文本域
+                    $elem.val(courseData[key]);
+                }
+            }
+            form.render(); // 重新渲染表单
+        }
+
+        // 监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            }, function () {
+                // 关闭弹出层
+                layer.close(index);
+                // 关闭当前iframe窗口
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+                // 刷新父页面表格
+                parent.layui.table.reload('currentTableId');
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

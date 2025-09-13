@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>学习行为分析</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		<link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+		<link rel="stylesheet" href="../css/public.css" media="all">
+		<!-- 引入echarts.js -->
+		<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+		<style>
+			body {
+				background-color: #ffffff;
+				padding: 15px;
+			}
+
+			.chart-container {
+				height: 400px;
+				margin: 20px 0;
+				border: 1px solid #eee;
+				border-radius: 4px;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layuimini-container">
+			<div class="layuimini-main">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						<i class="fa fa-area-chart icon icon-blue"></i>学习行为分析
+					</div>
+					<div class="layui-card-body">
+						<form class="layui-form layuimini-form" lay-filter="analysisForm">
+							<div class="layui-form-item">
+								<label class="layui-form-label required">分析周期</label>
+								<div class="layui-input-block">
+									<select name="period" lay-verify="required">
+										<option value="week">近一周</option>
+										<option value="month">近一月</option>
+										<option value="quarter">近一季度</option>
+										<option value="year">近一年</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label required">课程筛选</label>
+								<div class="layui-input-block">
+									<select name="course" lay-verify="required" lay-search>
+										<option value="">全部课程</option>
+										<option value="1">Web前端开发实战（HTML/CSS/JS）</option>
+										<option value="2">Python自动化办公入门到精通</option>
+										<option value="3">Java后端开发（Spring Boot 框架）</option>
+										<option value="4">短视频剪辑与运营（Pr+剪映）</option>
+										<option value="5">数据分析与可视化（Excel+Tableau）</option>
+										<option value="6">移动端APP开发（Flutter跨平台）</option>
+										<option value="7">UI设计基础（Figma实战）</option>
+										<option value="8">MySQL数据库优化与性能调优</option>
+										<option value="9">跨境电商运营（亚马逊开店实战）</option>
+										<option value="10">人工智能基础（机器学习入门）</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">学习时长统计</label>
+								<div class="layui-input-block chart-container" id="studyTimeChart">
+									<!-- 图表将通过JS渲染 -->
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">访问频率分析</label>
+								<div class="layui-input-block chart-container" id="visitFreqChart">
+									<!-- 图表将通过JS渲染 -->
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<button class="layui-btn layui-btn-normal" lay-submit
+										lay-filter="searchBtn">查询分析</button>
+									<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'layer', 'element'], function() {
+				var form = layui.form,
+					layer = layui.layer,
+					element = layui.element;
+				
+				// 学习时长统计图表实例
+				let studyTimeChart = null;
+				// 访问频率分析图表实例
+				let visitFreqChart = null;
+
+				// 初始化图表
+				function initCharts() {
+					// 初始化学习时长统计图表（柱状图）
+					studyTimeChart = echarts.init(document.getElementById('studyTimeChart'));
+					// 初始化访问频率分析图表（饼图）
+					visitFreqChart = echarts.init(document.getElementById('visitFreqChart'));
+					
+					// 设置默认数据
+					updateCharts();
+				}
+
+				// 更新图表数据
+				function updateCharts() {
+					// 获取选中的周期和课程
+					const period = form.val('analysisForm').period || 'week';
+					const course = form.val('analysisForm').course;
+					
+					// 周期文本映射
+					const periodTextMap = {
+						'week': '近一周',
+						'month': '近一月',
+						'quarter': '近一季度',
+						'year': '近一年'
+					};
+					
+					// 课程名称映射
+					const courseNameMap = {
+						'': '全部课程',
+						'1': 'Web前端开发实战',
+						'2': 'Python自动化办公',
+						'3': 'Java后端开发',
+						'4': '短视频剪辑与运营',
+						'5': '数据分析与可视化',
+						'6': '移动端APP开发',
+						'7': 'UI设计基础',
+						'8': 'MySQL数据库优化',
+						'9': '跨境电商运营',
+						'10': '人工智能基础'
+					};
+
+					// 柱状图配置（学习时长统计）
+					const barOption = {
+						title: {
+							text: `${courseNameMap[course]}${periodTextMap[period]}学习时长`,
+							subtext: '单位：小时',
+							left: 'center'
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'shadow'
+							}
+						},
+						xAxis: {
+							type: 'category',
+							data: period === 'week' ? 
+								['周一', '周二', '周三', '周四', '周五', '周六', '周日'] :
+								period === 'month' ? 
+								['第1周', '第2周', '第3周', '第4周'] :
+								period === 'quarter' ?
+								['1月', '2月', '3月'] :
+								['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+						},
+						yAxis: {
+							type: 'value',
+							name: '时长（小时）'
+						},
+						series: [{
+							name: '学习时长',
+							type: 'bar',
+							data: generateRandomData(period),
+							itemStyle: {
+								color: '#3886e1'
+							}
+						}]
+					};
+
+					// 饼图配置（访问频率分析）
+					const pieOption = {
+						title: {
+							text: `${courseNameMap[course]}访问来源分布`,
+							left: 'center'
+						},
+						tooltip: {
+							trigger: 'item'
+						},
+						series: [{
+							name: '访问来源',
+							type: 'pie',
+							radius: '60%',
+							data: [
+								{value: 35, name: '直接访问'},
+								{value: 25, name: '首页推荐'},
+								{value: 20, name: '搜索查询'},
+								{value: 10, name: '课程关联'},
+								{value: 10, name: '外部链接'}
+							],
+							emphasis: {
+								itemStyle: {
+									shadowBlur: 10,
+									shadowOffsetX: 0,
+									shadowColor: 'rgba(0, 0, 0, 0.5)'
+								}
+							}
+						}]
+					};
+
+					// 设置图表数据
+					studyTimeChart.setOption(barOption);
+					visitFreqChart.setOption(pieOption);
+				}
+
+				// 生成随机数据
+				function generateRandomData(period) {
+					const countMap = {
+						'week': 7,
+						'month': 4,
+						'quarter': 3,
+						'year': 12
+					};
+					return Array.from({length: countMap[period]}, () => Math.floor(Math.random() * 10) + 1);
+				}
+
+				// 窗口大小变化时自适应
+				window.onresize = function() {
+					if (studyTimeChart) studyTimeChart.resize();
+					if (visitFreqChart) visitFreqChart.resize();
+				};
+
+				// 初始化图表
+				initCharts();
+
+				// 监听查询提交
+				form.on('submit(searchBtn)', function(data) {
+					layer.load(2);
+					// 模拟查询加载
+					setTimeout(function() {
+						layer.closeAll('loading');
+						layer.msg('分析完成', {icon: 1});
+						updateCharts(); // 重新加载图表数据
+					}, 1000);
+					return false;
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,157 @@
+{
+	"homeInfo": {
+		"title": "首页",
+		"href": "page/welcome-1.html?t=1"
+	},
+	"logoInfo": {
+		"title": "在线学习网站",
+		"image": "images/studyLogo.jpeg",
+		"href": ""
+	},
+	"menuInfo": [{
+			"title": "常规管理",
+			"icon": "fa fa-address-book",
+			"href": "",
+			"target": "_self",
+			"child": [{
+					"title": "用户管理",
+					"icon": "fa fa-user",
+					"target": "_self",
+					"child": [{
+							"title": "用户注册",
+							"href": "userManagement/register.html",
+							"icon": "fa fa-user-plus",
+							"target": "_self"
+						},
+						{
+							"title": "用户登录",
+							"href": "userManagement/login-3.html",
+							"icon": "fa fa-sign-in",
+							"target": "_self"
+						},
+						{
+							"title": "个人信息管理",
+							"href": "userManagement/user-setting.html",
+							"icon": "fa fa-user-circle",
+							"target": "_self"
+						},
+						{
+							"title": "密码更改",
+							"href": "userManagement/user-password.html",
+							"icon": "fa fa-key",
+							"target": "_self"
+						}
+					]
+				},
+
+				{
+					"title": "后台管理",
+					"icon": "fa fa-cogs",
+					"target": "_self",
+					"child": [{
+							"title": "用户信息管理",
+							"href": "adminManagement/user-data-management.html",
+							"icon": "fa fa-users",
+							"target": "_self"
+						},
+						{
+							"title": "系统设置",
+							"href": "adminManagement/system-setting.html",
+							"icon": "fa fa-cog",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "课程学习",
+					"icon": "fa fa-book",
+					"target": "_self",
+					"child": [{
+						"title": "课程浏览",
+						"href": "courseStudy/course-scan.html",
+						"icon": "fa fa-th-list",
+						"target": "_self"
+					}]
+				},
+				{
+					"title": "资源下载",
+					"icon": "fa fa-download",
+					"target": "_self",
+					"child": [{
+							"title": "学习资料上传",
+							"href": "resourceDownload/upload.html",
+							"icon": "fa fa-upload",
+							"target": "_self"
+						},
+						{
+							"title": "学习资料下载",
+							"href": "resourceDownload/download.html",
+							"icon": "fa fa-download",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "互动交流",
+					"icon": "fa fa-question-circle-o",
+					"target": "_self",
+					"child": [{
+							"title": "题目问答",
+							"href": "interaction/qa.html",
+							"icon": "fa fa-question-circle",
+							"target": "_self"
+						},
+						{
+							"title": "私信交流",
+							"href": "interaction/messages.html",
+							"icon": "fa fa-envelope",
+							"target": "_self"
+						}
+					]
+				},
+
+				{
+					"title": "考试测评",
+					"icon": "fa fa-pencil-square-o",
+					"target": "_self",
+					"child": [{
+							"title": "在线考试",
+							"href": "examination/online-exam.html",
+							"icon": "fa fa-pencil",
+							"target": "_self"
+						},
+						{
+							"title": "成绩查询",
+							"href": "examination/score-query.html",
+							"icon": "fa fa-check-square-o",
+							"target": "_self"
+						}
+						
+					]
+				},
+				{
+					"title": "数据分析",
+					"icon": "fa fa-bar-chart",
+					"target": "_self",
+					"child": [{
+							"title": "学习行为分析",
+							"href": "dataAnalysis/learning-behavior.html",
+							"icon": "fa fa-area-chart",
+							"target": "_self"
+						},
+						{
+							"title": "学习效果评估",
+							"href": "dataAnalysis/learning-effect.html",
+							"icon": "fa fa-pie-chart",
+							"target": "_self"
+						}
+						
+					]
+				}
+
+			]
+		}
+		
+		
+	]
+}

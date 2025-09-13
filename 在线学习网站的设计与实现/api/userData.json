@@ -1,0 +1,97 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "id": 10000,
+      "username": "张三",
+      "sex": "男",
+      "city": "北京",
+      "studytime": 255,
+      "major": "软件工程",
+      "score": 57
+    },
+    {
+      "id": 10001,
+      "username": "李四",
+      "sex": "女",
+      "city": "上海",
+      "studytime": 884,
+      "major": "计算机科学与技术",
+      "score": 27
+    },
+    {
+      "id": 10002,
+      "username": "王五",
+      "sex": "男",
+      "city": "广州",
+      "studytime": 650,
+      "major": "人工智能",
+      "score": 31
+    },
+    {
+      "id": 10003,
+      "username": "赵六",
+      "sex": "女",
+      "city": "深圳",
+      "studytime": 362,
+      "major": "网络工程",
+      "score": 68
+    },
+    {
+      "id": 10004,
+      "username": "钱七",
+      "sex": "男",
+      "city": "青岛",
+      "studytime": 807,
+      "major": "物联网工程",
+      "score": 6
+    },
+    {
+      "id": 10005,
+      "username": "孙八",
+      "sex": "女",
+      "city": "天津",
+      "studytime": 173,
+      "major": "信息安全",
+      "score": 87
+    },
+    {
+      "id": 10006,
+      "username": "周九",
+      "sex": "男",
+      "city": "杭州",
+      "studytime": 982,
+      "major": "数字媒体技术",
+      "score": 34
+    },
+    {
+      "id": 10007,
+      "username": "吴十",
+      "sex": "男",
+      "city": "南京",
+      "studytime": 727,
+      "major": "数据科学与大数据技术",
+      "score": 28
+    },
+    {
+      "id": 10008,
+      "username": "张伟",
+      "sex": "男",
+      "city": "太原",
+      "studytime": 951,
+      "major": "新媒体技术",
+      "score": 14
+    },
+    {
+      "id": 10009,
+      "username": "王芳",
+      "sex": "女",
+      "city": "西安",
+      "studytime": 484,
+      "major": "电子与计算机工程",
+      "score": 75
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+			"id": 10000,
+			"classify": "技术开发",
+			"popularity": "3286人",
+			"rating": "4.8/5",
+			"coursename": "Web 前端开发实战（HTML/CSS/JS）",
+			"level": "入门",
+			"teacher":"陈明宇"
+		},
+		{
+			"id": 10001,
+			"classify": "办公效率",
+			"popularity": "2954人",
+			"rating": "4.7/5",
+			"coursename": "Python 自动化办公入门到精通",
+			"level": "简单",
+			"teacher": "林晓雯"
+		},
+		{
+			"id": 10002,
+			"classify": "技术开发",
+			"popularity": "4120人",
+			"rating": "4.9/5",
+			"coursename": "Java 后端开发（Spring Boot 框架）",
+			"level":"中等",
+			"teacher":"王建国"
+		},
+		{
+			"id": 10003,
+			"classify": "设计运营",
+			"popularity": "5318人",
+			"rating": "4.6/5",
+			"coursename": "短视频剪辑与运营（Pr + 剪映）",
+			"level": "入门",
+			"teacher":"赵思琪"
+		},
+		{
+			"id": 10004,
+			"classify": "办公效率",
+			"popularity": "2763人",
+			"rating": "4.8/5",
+			"coursename": "数据分析与可视化（Excel+Tableau）",
+			"level": "简单",
+			"teacher":"刘浩然"
+		},
+		{
+			"id": 10005,
+			"classify": "技术开发",
+			"popularity": "1895人",
+			"rating": "4.7/5",
+			"coursename": "移动端 APP 开发（Flutter 跨平台）",
+			"level": "中等",
+			"teacher":"郑雅欣"
+		},
+		{
+			"id": 10006,
+			"classify": "设计运营",
+			"popularity": "3572人",
+			"rating": "4.9/5",
+			"coursename": "UI 设计基础（Figma 实战）",
+			"level": "入门",
+			"teacher":"黄伟明"
+		},
+		{
+			"id": 10007,
+			"classify": "技术开发",
+			"popularity": "1643人",
+			"rating": "4.8/5",
+			"coursename": "MySQL 数据库优化与性能调优",
+			"level": "困难",
+			"teacher":"周雨桐"
+		},
+		{
+			"id": 10008,
+			"classify": "设计运营",
+			"popularity": "2489人",
+			"rating": "4.6/5",
+			"coursename": "跨境电商运营（亚马逊开店实战）",
+			"level":"简单" ,
+			"teacher":"张伟强"
+		},
+		{
+			"id": 10009,
+			"classify": "技术开发",
+			"popularity": "4528人",
+			"rating": "4.7/5",
+			"coursename": "人工智能基础（机器学习入门）",
+			"level": "中等",
+			"teacher":"吴宇轩"
+		}
+	]
+}

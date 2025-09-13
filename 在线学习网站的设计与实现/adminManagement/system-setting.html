@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>后台管理-系统设置</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		<link rel="stylesheet" href="../css/public.css" media="all">
+		<style>
+			body {
+				background-color: #ffffff;
+			}
+
+			.logo-preview {
+				width: 40px;
+				height: 40px;
+				border: 1px dashed #ccc;
+				margin: 10px 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: #f9f9f9;
+			}
+
+			.logo-preview img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+
+			tip {
+				color: #666;
+				font-size: 12px;
+				margin-top: 5px;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layui-form layuimini-form">
+			<!-- 网站名称 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">网站名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="siteName" lay-verify="required" lay-reqtext="网站名称不能为空"
+						placeholder="请输入网站名称" value="在线学习网站" class="layui-input">
+					<tip>设置平台显示的名称。</tip>
+				</div>
+			</div>
+
+			<!-- 平台LOGO -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">平台LOGO</label>
+				<div class="layui-input-block">
+					<div class="logo-preview" id="logoContainer">
+						<img src="../images/studyLogo.jpeg" alt="平台LOGO">
+					</div>
+					<input type="file" id="logoUpload" style="display: none;" accept="image/*">
+					<button class="layui-btn layui-btn-primary" onclick="document.getElementById('logoUpload').click()">
+						点击上传LOGO
+					</button>
+					<tip>建议尺寸：40x40像素，支持PNG、JPG格式。</tip>
+				</div>
+			</div>
+
+			<!-- 网站域名 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">网站域名</label>
+				<div class="layui-input-block">
+					<input type="text" name="domain" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名"
+						value="https://zanwu.com" class="layui-input">
+					<tip>填写平台访问的域名地址。</tip>
+				</div>
+			</div>
+
+			<!-- 客服邮箱 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label">客服邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" name="serviceEmail" placeholder="请输入客服邮箱" value="123456@163.com"
+						class="layui-input">
+				</div>
+			</div>
+
+			<!-- 公告信息 -->
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">公告信息</label>
+				<div class="layui-input-block">
+					<textarea name="notice" class="layui-textarea" placeholder="请输入平台公告（支持HTML）">
+欢迎使用在线学习平台！
+平台持续更新优质课程，祝您学习愉快～
+                   开发者：2413041021任晓宇
+            </textarea>
+					<tip>设置首页显示的公告内容。</tip>
+				</div>
+			</div>
+
+			<!-- 保存按钮 -->
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'upload', 'layer'], function() {
+				var form = layui.form,
+					upload = layui.upload,
+					layer = layui.layer,
+					$ = layui.$;
+
+				// 渲染表单
+				form.render();
+
+
+				//只是一个架子，实际无法上传
+				// LOGO上传逻辑
+				upload.render({
+					elem: '#logoUpload',
+					url: '../api/upload.json',
+					accept: 'images',
+					done: function(res) {
+						if (res.code === 0) {
+							document.querySelector('#logoContainer img').src = res.data.url;
+							layer.msg('LOGO上传成功', {
+								icon: 1
+							});
+						} else {
+							layer.msg('上传失败：' + res.msg, {
+								icon: 2
+							});
+						}
+					},
+					error: function() {
+						layer.msg('上传接口异常', {
+							icon: 2
+						});
+					}
+				});
+
+				// 监听提交
+				form.on('submit(saveBtn)', function(data) {
+					var index = layer.alert(JSON.stringify(data.field), {
+						title: '最终的提交信息'
+					}, function() {
+						// 关闭弹出层
+						layer.close(index);
+
+						// 关闭当前iframe页面
+						var iframeIndex = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(iframeIndex);
+					});
+					return false;
+				});
+			});
+		</script>
+	</body>
+</html>

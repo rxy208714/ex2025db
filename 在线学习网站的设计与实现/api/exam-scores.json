@@ -1,0 +1,106 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 20,
+	"data": [{
+			"id": 1,
+			"courseName": "Web 前端开发实战（HTML/CSS/JS）",
+			"examDate": "2025-09-15",
+			"score": 85,
+			"totalScore": 100,
+			"rank": 3,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 2,
+			"courseName": "Python 自动化办公入门到精通",
+			"examDate": "2025-09-20",
+			"score": 76,
+			"totalScore": 100,
+			"rank": 7,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 3,
+			"courseName": "Java 后端开发（Spring Boot 框架）",
+			"examDate": "2025-09-25",
+			"score": 58,
+			"totalScore": 100,
+			"rank": 18,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 4,
+			"courseName": "短视频剪辑与运营（Pr + 剪映）",
+			"examDate": "2025-10-08",
+			"score": 92,
+			"totalScore": 100,
+			"rank": 1,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 5,
+			"courseName": "数据分析与可视化（Excel+Tableau）",
+			"examDate": "2025-10-15",
+			"score": 79,
+			"totalScore": 100,
+			"rank": 5,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 6,
+			"courseName": "移动端 APP 开发（Flutter 跨平台）",
+			"examDate": "2025-10-22",
+			"score": 0,
+			"totalScore": 100,
+			"rank": 0,
+			"passingScore": 60,
+			"status": "进行中"
+		},
+		{
+			"id": 7,
+			"courseName": "UI 设计基础（Figma 实战）",
+			"examDate": "2025-11-05",
+			"score": 0,
+			"totalScore": 100,
+			"rank": 0,
+			"passingScore": 60,
+			"status": "未开始"
+		},
+		{
+			"id": 8,
+			"courseName": "MySQL 数据库优化与性能调优",
+			"examDate": "2025-11-12",
+			"score": 0,
+			"totalScore": 100,
+			"rank": 0,
+			"passingScore": 60,
+			"status": "未开始"
+		},
+		{
+			"id": 9,
+			"courseName": "跨境电商运营（亚马逊开店实战）",
+			"examDate": "2025-10-30",
+			"score": 88,
+			"totalScore": 100,
+			"rank": 2,
+			"passingScore": 60,
+			"status": "已完成"
+		},
+		{
+			"id": 10,
+			"courseName": "人工智能基础（机器学习入门）",
+			"examDate": "2025-11-20",
+			"score": 0,
+			"totalScore": 100,
+			"rank": 0,
+			"passingScore": 60,
+			"status": "未开始"
+		}
+	]
+}

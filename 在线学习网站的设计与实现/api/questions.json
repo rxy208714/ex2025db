@@ -1,0 +1,86 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 20,
+	"data": [{
+			"id": 1,
+			"title": "HTML中如何实现响应式布局？",
+			"category": "技术开发",
+			"course": "Web 前端开发实战（HTML/CSS/JS）",
+			"status": 1,
+			"createTime": "2025-09-01 09:20:00"
+		},
+		{
+			"id": 2,
+			"title": "Python如何批量处理Excel文件？",
+			"category": "办公效率",
+			"course": "Python 自动化办公入门到精通",
+			"status": 0,
+			"createTime": "2025-09-01 14:35:15"
+		},
+		{
+			"id": 3,
+			"title": "Spring Boot如何配置多数据源？",
+			"category": "技术开发",
+			"course": "Java 后端开发（Spring Boot 框架）",
+			"status": 2,
+			"createTime": "2025-09-02 10:10:30"
+		},
+		{
+			"id": 4,
+			"title": "Pr如何制作慢动作效果？",
+			"category": "设计运营",
+			"course": "短视频剪辑与运营（Pr+剪映）",
+			"status": 1,
+			"createTime": "2025-09-02 16:45:22"
+		},
+		{
+			"id": 5,
+			"title": "Tableau如何创建交互式仪表盘？",
+			"category": "办公效率",
+			"course": "数据分析与可视化（Excel+Tableau）",
+			"status": 0,
+			"createTime": "2025-09-03 08:50:40"
+		},
+		{
+			"id": 6,
+			"title": "Flutter如何实现页面跳转动画？",
+			"category": "技术开发",
+			"course": "移动端 APP 开发（Flutter 跨平台）",
+			"status": 1,
+			"createTime": "2025-09-03 13:20:15"
+		},
+		{
+			"id": 7,
+			"title": "Figma如何创建组件库？",
+			"category": "设计运营",
+			"course": "UI 设计基础（Figma 实战）",
+			"status": 0,
+			"createTime": "2025-09-04 11:30:50"
+		},
+		{
+			"id": 8,
+			"title": "MySQL如何优化查询性能？",
+			"category": "技术开发",
+			"course": "MySQL数据库优化与性能调优",
+			"status": 1,
+			"createTime": "2025-09-04 15:45:30"
+		},
+		{
+			"id": 9,
+			"title": "亚马逊店铺如何设置优惠券？",
+			"category": "设计运营",
+			"course": "跨境电商运营（亚马逊开店实战）",
+			"status": 2,
+			"createTime": "2025-09-05 09:15:25"
+		},
+		{
+			"id": 10,
+			"title": "机器学习模型如何评估准确率？",
+			"category": "技术开发",
+			"course": "人工智能基础（机器学习入门）",
+			"status": 0,
+			"createTime": "2025-09-05 14:20:40"
+		}
+	]
+}

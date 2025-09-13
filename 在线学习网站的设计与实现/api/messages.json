@@ -1,0 +1,167 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 20,
+  "data": [
+    {
+      "id": 1,
+      "sender": "张同学",
+      "receiver": "课程顾问",
+      "content": "《Web前端开发实战》这门课适合零基础学习吗？需要提前准备什么工具？",
+      "status": "unread",
+      "sendTime": "2025-09-01 09:15:30"
+    },
+    {
+      "id": 2,
+      "sender": "课程顾问",
+      "receiver": "张同学",
+      "content": "完全适合零基础！只需准备Chrome浏览器和VS Code编辑器，课程会从环境搭建开始讲起",
+      "status": "read",
+      "sendTime": "2025-09-01 10:20:15"
+    },
+    {
+      "id": 3,
+      "sender": "李同学",
+      "receiver": "技术支持",
+      "content": "课程视频加载到30%就卡住了，换了浏览器也不行，怎么解决？",
+      "status": "unread",
+      "sendTime": "2025-09-02 14:05:40"
+    },
+    {
+      "id": 4,
+      "sender": "技术支持",
+      "receiver": "李同学",
+      "content": "建议尝试清除浏览器缓存，或直接下载课程视频离线观看（课程详情页有下载按钮）",
+      "status": "read",
+      "sendTime": "2025-09-02 14:30:22"
+    },
+    {
+      "id": 5,
+      "sender": "王同学",
+      "receiver": "陈明宇讲师",
+      "content": "陈老师，JS中的闭包概念还是不太理解，能再举个实际开发中的例子吗？",
+      "status": "read",
+      "sendTime": "2025-09-03 20:18:55"
+    },
+    {
+      "id": 6,
+      "sender": "陈明宇讲师",
+      "receiver": "王同学",
+      "content": "可以看看课程第5章的课后案例，用闭包实现了计数器功能，明天直播课我也会重点讲解",
+      "status": "read",
+      "sendTime": "2025-09-03 21:05:10"
+    },
+    {
+      "id": 7,
+      "sender": "系统通知",
+      "receiver": "全体学员",
+      "content": "9月5日20:00将举办《Python自动化办公》直播答疑，讲师林晓雯将在线解答问题",
+      "status": "unread",
+      "sendTime": "2025-09-04 15:30:00"
+    },
+    {
+      "id": 8,
+      "sender": "赵同学",
+      "receiver": "学习助手",
+      "content": "购买的课程能申请发票吗？需要提供什么信息？",
+      "status": "read",
+      "sendTime": "2025-09-04 16:45:33"
+    },
+    {
+      "id": 9,
+      "sender": "学习助手",
+      "receiver": "赵同学",
+      "content": "可以开具电子发票，在「个人中心-订单管理」中申请，需填写发票抬头和税号",
+      "status": "read",
+      "sendTime": "2025-09-04 17:10:25"
+    },
+    {
+      "id": 10,
+      "sender": "孙同学",
+      "receiver": "课程群助手",
+      "content": "请问《Java后端开发》的课程资料在哪里下载？找不到课件链接",
+      "status": "read",
+      "sendTime": "2025-09-05 11:20:18"
+    },
+    {
+      "id": 11,
+      "sender": "课程群助手",
+      "receiver": "孙同学",
+      "content": "课件在每节课视频下方的「资料下载」区，最新章节资料已更新，请刷新页面查看",
+      "status": "unread",
+      "sendTime": "2025-09-05 11:35:40"
+    },
+    {
+      "id": 12,
+      "sender": "刘同学",
+      "receiver": "技术支持",
+      "content": "手机APP上无法观看已购课程，提示「未购买」，但网页端可以正常观看",
+      "status": "unread",
+      "sendTime": "2025-09-06 08:40:50"
+    },
+    {
+      "id": 13,
+      "sender": "技术支持",
+      "receiver": "刘同学",
+      "content": "请在APP中退出账号重新登录同步购买信息，若仍有问题请提供截图协助排查",
+      "status": "read",
+      "sendTime": "2025-09-06 09:15:30"
+    },
+    {
+      "id": 14,
+      "sender": "系统通知",
+      "receiver": "周同学",
+      "content": "您购买的《UI设计基础》课程已更新至第8章，新增Figma组件库实战内容",
+      "status": "unread",
+      "sendTime": "2025-09-07 10:00:00"
+    },
+    {
+      "id": 15,
+      "sender": "郑同学",
+      "receiver": "赵思琪讲师",
+      "content": "赵老师，Pr课程里讲的转场效果，在剪映里能实现吗？操作步骤一样吗？",
+      "status": "read",
+      "sendTime": "2025-09-07 19:25:10"
+    },
+    {
+      "id": 16,
+      "sender": "赵思琪讲师",
+      "receiver": "郑同学",
+      "content": "剪映的转场功能更简化，我整理了一份对比操作表，已发至课程资料区",
+      "status": "read",
+      "sendTime": "2025-09-07 20:05:45"
+    },
+    {
+      "id": 17,
+      "sender": "吴同学",
+      "receiver": "学习助手",
+      "content": "想换绑手机号，原来的号码已经不用了，需要走什么流程？",
+      "status": "read",
+      "sendTime": "2025-09-08 13:20:30"
+    },
+    {
+      "id": 18,
+      "sender": "学习助手",
+      "receiver": "吴同学",
+      "content": "请提供身份证正反面照片进行身份验证，验证通过后即可换绑，资料会严格保密",
+      "status": "unread",
+      "sendTime": "2025-09-08 13:40:15"
+    },
+    {
+      "id": 19,
+      "sender": "系统通知",
+      "receiver": "全体学员",
+      "content": "中秋节课程优惠活动：9月10-12日购买任意课程可享8折，叠加优惠券更划算",
+      "status": "unread",
+      "sendTime": "2025-09-09 09:30:00"
+    },
+    {
+      "id": 20,
+      "sender": "冯同学",
+      "receiver": "课程顾问",
+      "content": "同时购买《数据分析》和《MySQL优化》两门课，有组合优惠吗？",
+      "status": "read",
+      "sendTime": "2025-09-09 10:15:20"
+    }
+  ]
+}
